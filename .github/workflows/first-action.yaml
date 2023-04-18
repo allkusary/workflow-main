@@ -1,7 +1,12 @@
 name: First Workflow
-on: push
+on: [push, workflow_dispatch]
 
 jobs:
+  print-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Context
+        run: echo ${{ toJson(github) }}
   test-job:
      runs-on: ubuntu-latest
      steps:
