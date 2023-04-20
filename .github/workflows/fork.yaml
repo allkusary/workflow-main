@@ -13,3 +13,5 @@ jobs:
         run:  var=${{ secrets.PASSWORD }}; echo $var
       - name: echo var
         run: echo ${{ vars.USERNAME }}
+      - name: from fork
+        run: echo "hello from fork"
