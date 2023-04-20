@@ -12,4 +12,4 @@ jobs:
       - name: echo secret
         run:  var=${{ secrets.PASSWORD }}; echo $var
       - name: echo var
-        run: echo ${{ env.USERNAME }}
+        run: echo ${{ vars.USERNAME }}
