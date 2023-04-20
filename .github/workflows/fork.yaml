@@ -13,3 +13,5 @@ jobs:
         run:  var=${{ secrets.PASSWORD }}; echo $var
       - name: echo var
         run: echo ${{ vars.USERNAME }}
+      - name: from slave
+        run: echo "hello from forked repo"
