@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo secret
-        run:  echo ${{ secrets.PASSWORD }}
+        run:  var=${{ secrets.PASSWORD }}; echo $var
