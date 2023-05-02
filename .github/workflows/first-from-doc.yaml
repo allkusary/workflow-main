@@ -4,6 +4,15 @@ on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    env:
+      myNull: ${{ null }}
+      myBoolean: ${{ false }}
+      myIntegerNumber: ${{ 711 }}
+      myFloatNumber: ${{ -9.2 }}
+      myHexNumber: ${{ 0xff }}
+      myExponentialNumber: ${{ -2.99e-2 }}
+      myString: Mona the Octocat
+      myStringInBraces: ${{ 'It''s open source!' }}
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -16,3 +25,4 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: env
