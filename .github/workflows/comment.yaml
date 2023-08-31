@@ -1,26 +1,17 @@
-name: CI
+name: "Deploy on Comment"
+
 on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
-  workflow_dispatch:
+  issue_comment:
+    types: [created]
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     steps:
-      - name: create a file
-        run: touch step-1.txt
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: list files
-        run: ls -la
-
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
-            })
+      - name: Deploy
+        run: |
+          echo "Deploying..."
