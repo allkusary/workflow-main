@@ -1,14 +1,17 @@
-name: "Comment run"
+name: "Deploy on Comment"
+
 on:
   issue_comment:
-    types: [created, edited]
+    types: [created]
 
 jobs:
-  comment-run:
-    runs-on: ubuntu-20.04
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     steps:
-    - uses: actions/checkout@v3
-    - uses: nwtgck/actions-comment-run@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        allowed-associations: '["OWNER"]'
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Deploy
+        run: |
+          echo "Deploying..."
