@@ -1,36 +1,14 @@
-name: CI
+name: "Comment run"
 on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
-  workflow_dispatch:
+  issue_comment:
+    types: [created, edited]
+
 jobs:
-  build:
-    permissions: write-all
-    runs-on: ubuntu-latest
+  comment-run:
+    runs-on: ubuntu-20.04
     steps:
-      - name: create a file
-        run: touch step-1.txt
-
-      - name: list files
-        run: ls -la
-        
-
-      - name: Add comment to PR
-        uses: actions/github-script@v6
-        if: always()
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const name = '${{ github.workflow   }}';
-            const url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}';
-            const success = '${{ job.status }}' === 'success';
-            const body = `${name}: ${success ? 'succeeded ✅' : 'failed ❌'}\n${url}`;
-
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: body
-            })
+    - uses: actions/checkout@v3
+    - uses: nwtgck/actions-comment-run@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        allowed-associations: '["OWNER"]'
